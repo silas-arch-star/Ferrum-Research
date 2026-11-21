@@ -1,0 +1,201 @@
+/* Shared liquid editorial material and chapter motion. Source charts remain live UI. */
+:root {
+  --liquid-ink: rgb(8 11 14 / .7);
+  --liquid-clear: rgb(21 27 32 / .28);
+  --liquid-edge: rgb(235 241 246 / .23);
+  --liquid-flare: rgb(240 245 248 / .16);
+  --liquid-shadow: 0 24px 70px rgb(0 0 0 / .32), inset 0 1px rgb(255 255 255 / .12);
+  --glass-fill: rgb(13 17 20 / .68);
+  --glass-edge: rgb(235 241 246 / .2);
+}
+
+body { background: #080a0d; }
+.app-shell { position: relative; min-height: 100vh; background: radial-gradient(ellipse 70vw 55vh at 78% 12%, rgb(115 129 139 / .075), transparent 70%), #080a0d; }
+.app-shell::before { position: fixed; z-index: 0; top: 8vh; right: -10vw; width: min(76vw, 1200px); height: 72vh; border-radius: 42% 58% 61% 39% / 43% 46% 54% 57%; background: radial-gradient(ellipse at 30% 55%, var(--liquid-flare), transparent 51%), radial-gradient(ellipse at 72% 28%, var(--liquid-clear), transparent 64%); filter: blur(48px); opacity: .32; content: ""; pointer-events: none; will-change: transform; animation: ambient-tide 22s ease-in-out infinite alternate; }
+.page-container { position: relative; }
+.topbar { z-index: 30; background: rgb(7 10 13 / .58); border-bottom-color: rgb(232 240 246 / .16); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.topbar::after { position: absolute; inset: auto 0 0; height: 1px; background: linear-gradient(90deg, transparent, rgb(255 255 255 / .3) 43%, transparent); content: ""; pointer-events: none; }
+.palette-trigger, .mobile-menu-button { background: linear-gradient(135deg, rgb(255 255 255 / .07), rgb(255 255 255 / .015) 55%, rgb(255 255 255 / .055)), rgb(9 13 17 / .42); border-color: var(--liquid-edge); box-shadow: inset 0 1px rgb(255 255 255 / .08); }
+.module-link::after { box-shadow: 0 0 12px rgb(255 255 255 / .4); }
+
+.liquid-surface, .view-company .company-context, .view-company .assessment-row > div,
+.view-sector .sticky-chart, .view-compare .comparison-controls, .view-rankings .category-feature,
+.view-methodology .method-notes article, .view-intelligence .intel-controls, .view-company .intel-controls {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--liquid-edge);
+  border-radius: 16px;
+  background: linear-gradient(143deg, rgb(235 242 248 / .085), transparent 28%, rgb(192 210 223 / .035) 65%, rgb(255 255 255 / .055)), var(--liquid-ink);
+  box-shadow: var(--liquid-shadow);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.liquid-surface::before, .view-company .company-context::before, .view-sector .sticky-chart::before,
+.view-compare .comparison-controls::before, .view-methodology .method-notes article::before,
+.view-intelligence .intel-controls::before, .view-company .intel-controls::before {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 5%;
+  width: 76%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / .72), transparent);
+  content: "";
+  pointer-events: none;
+}
+.liquid-surface > *, .view-company .company-context > *, .view-sector .sticky-chart > *,
+.view-compare .comparison-controls > *, .view-methodology .method-notes article > *,
+.view-intelligence .intel-controls > *, .view-company .intel-controls > * { position: relative; z-index: 1; }
+.liquid-control, .compare-action, .intel-secondary, .view-switch button, .comparison-selected button {
+  border: 1px solid var(--liquid-edge);
+  border-radius: 9px;
+  background: linear-gradient(145deg, rgb(255 255 255 / .09), rgb(255 255 255 / .015) 55%, rgb(255 255 255 / .06)), rgb(9 13 17 / .42);
+  box-shadow: inset 0 1px rgb(255 255 255 / .11), 0 10px 30px rgb(0 0 0 / .16);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: border-color .25s ease, background .25s ease, box-shadow .35s ease, transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.liquid-control:hover, .compare-action:hover, .intel-secondary:hover:not(:disabled), .view-switch button:hover, .comparison-selected button:hover {
+  border-color: rgb(255 255 255 / .55);
+  background-color: rgb(38 45 51 / .5);
+  box-shadow: inset 0 1px rgb(255 255 255 / .22), 0 14px 32px rgb(0 0 0 / .28), 0 0 20px rgb(255 255 255 / .07);
+  transform: translateY(-2px);
+}
+.liquid-control:active, .compare-action:active, .intel-secondary:active:not(:disabled), .view-switch button:active { transform: translateY(0) scale(.985); }
+
+/* Opening spread: the generated material stays behind live particles and charts. */
+.hero { position: relative; isolation: isolate; min-height: clamp(630px, 68svh, 760px); align-items: start; padding: 40px 0 88px; overflow: visible; border-bottom-color: rgb(245 244 240 / .3); }
+.hero::before { position: absolute; z-index: -2; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: url('/ferrum-liquid-atmosphere.png') center 72% / cover no-repeat; content: ""; pointer-events: none; }
+.hero-atmosphere { position: absolute; z-index: -2; inset: 0 auto 0 50%; width: 100vw; transform: translateX(-50%); pointer-events: none; }
+.hero-atmosphere-canvas { position: absolute !important; inset: 0; width: 100% !important; height: 100% !important; pointer-events: none; }
+.hero::after { position: absolute; z-index: -1; inset: 0; left: 50%; width: 100vw; transform: translateX(-50%); background: linear-gradient(90deg, rgb(5 8 11 / .72), rgb(5 8 11 / .24) 48%, rgb(5 8 11 / .38)), linear-gradient(180deg, rgb(5 7 9 / .28), transparent 32%, rgb(5 7 9 / .22)); content: ""; pointer-events: none; }
+.hero-copy { z-index: 2; padding-top: 32px; }
+.hero h1 { max-width: none; margin: 15px 0 18px; font-size: clamp(4.8rem, 7.3vw, 8rem); line-height: .88; text-shadow: 0 4px 30px rgb(0 0 0 / .4); }
+.hero-copy > p { max-width: 43ch; color: #d9dddf; font-size: 17px; line-height: 1.48; text-shadow: 0 2px 16px #050709; }
+.hero-meta { margin-top: 15px; color: #b5bec4; }
+.hero-explore { display: inline-flex; align-items: center; justify-content: space-between; gap: 34px; min-height: 48px; margin-top: 22px; padding: 10px 17px; color: var(--text); cursor: pointer; }
+.hero-explore svg { transition: transform .3s ease; }
+.hero-explore:hover svg { transform: translateX(4px); }
+.hero-network { position: absolute; z-index: 0; top: 6px; left: 33%; width: min(58vw, 880px); will-change: auto; }
+.hero-network-index { display: none; }
+.hero-data { z-index: 3; align-self: start; transform: none; margin-top: 1px; min-width: 0; padding: 18px 19px 16px; background: linear-gradient(145deg, rgb(213 228 237 / .07), transparent 40%, rgb(255 255 255 / .025)), rgb(7 10 13 / .88); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.hero-chart-heading { color: #edf1f3; }
+.hero-chart-heading span:last-child { color: #b7c1c8; }
+.hero-data .scatter-grid { stroke: rgb(232 238 242 / .17); }
+.hero-data .scatter-tick, .hero-data .scatter-axis-title { fill: #aeb8bf; }
+.hero-data .scatter-caption, .hero-data .hero-chart-caption { color: #b7c0c6; }
+.hero-data .point { stroke: #0c1115; }
+
+/* Chapters share a moving light line, while each route keeps its own content choreography. */
+.motion-chapter { --chapter-progress: 0; --wash-x: 0px; position: relative; }
+.motion-chapter::after { position: absolute; z-index: 0; top: 0; left: 0; width: min(270px, 38%); height: 1px; background: linear-gradient(90deg, transparent, rgb(236 244 249 / .72), transparent); transform: translateX(var(--wash-x)) scaleX(var(--chapter-progress)); transform-origin: left; content: ""; pointer-events: none; }
+.coverage-strip { position: relative; z-index: 2; background: linear-gradient(180deg, rgb(17 21 24 / .93), rgb(9 12 15 / .94)); border-bottom: 1px solid var(--liquid-edge); }
+.recommendation-section { isolation: isolate; }
+.recommendation-section::before { position: absolute; z-index: -1; inset: 0 -6vw; background: radial-gradient(ellipse 45% 65% at 83% 15%, rgb(194 212 224 / .1), transparent), radial-gradient(ellipse 55% 45% at 8% 95%, rgb(139 160 173 / .07), transparent); content: ""; pointer-events: none; }
+.recommendation-result { margin: 19px 0 16px; padding: clamp(20px, 3vw, 34px); animation: surface-arrive .48s cubic-bezier(.2,.75,.2,1) both; }
+.recommendation-result > .compare-action { width: fit-content; grid-column: 1 / -1; padding: 10px 17px; }
+.category-tab { transition: color .24s ease, background .24s ease, border-color .24s ease, transform .28s ease; }
+.category-tab:hover { transform: translateY(-2px); }
+.universe-section .table-scroll, .compare-table-wrap, .side-by-side-scroll { border: 1px solid var(--liquid-edge); border-radius: 10px; background: rgb(9 13 16 / .58); box-shadow: inset 0 1px rgb(255 255 255 / .06); }
+.universe-table thead th, .universe-table thead .sticky-company { background: rgb(23 29 33 / .97); }
+.universe-table .sticky-company { background: #0d1114; }
+.universe-table tbody tr:hover td, .universe-table tbody tr:hover .sticky-company { background: rgb(202 218 228 / .08); }
+.sector-teaser { overflow: hidden; border-top: 1px solid var(--liquid-edge); background: radial-gradient(ellipse 38% 130% at 85% 0%, rgb(201 216 226 / .11), transparent); }
+
+/* Research: a readable journal with glass at chapter boundaries. */
+.view-company .company-context { padding: clamp(20px, 3vw, 36px); margin: 24px 0 12px; }
+.view-company .company-panel > .intel-company { order: 15; }
+.view-company .context-strip { border: 1px solid var(--liquid-edge); border-radius: 9px; padding: 0 15px; background: rgb(11 15 18 / .78); box-shadow: 0 12px 34px rgb(0 0 0 / .27), inset 0 1px rgb(255 255 255 / .08); }
+.context-strip a[aria-current="location"] { color: var(--text); box-shadow: inset 0 -2px #e9eff3; }
+.view-company .assessment-row { gap: 12px; border: 0; margin: 14px 0 20px; }
+.view-company .assessment-row > div, .view-company .assessment-row > div + div { padding: 20px; border: 1px solid var(--liquid-edge); }
+.view-company .assessment-row strong { animation: metric-reveal .55s cubic-bezier(.2,.8,.2,1) both; }
+.view-company .company-section { padding-block: clamp(50px, 6vw, 86px); }
+.view-company .company-section > .section-heading { padding-bottom: 14px; border-bottom: 1px solid var(--liquid-edge); }
+.view-company .technical-chart { margin-top: 20px; padding: 20px; border: 1px solid rgb(235 241 246 / .13); border-radius: 12px; background: linear-gradient(160deg, rgb(229 237 244 / .045), transparent 45%), rgb(9 13 16 / .45); }
+.view-company .technical-chart + .technical-chart { padding-top: 20px; }
+.view-company .model-assessment, .view-company .risk-detail, .view-company .bull-bear > div { border: 1px solid var(--liquid-edge); border-radius: 10px; padding: 18px; background: rgb(24 31 36 / .28); }
+
+.view-sector .sector-layout { background: radial-gradient(ellipse 75% 35% at 78% 7%, rgb(202 216 226 / .085), transparent); }
+.view-sector .sector-story > .section-heading { padding: 16px 0 24px; border-bottom: 1px solid var(--liquid-edge); }
+.view-sector .paper-panel { border: 1px solid var(--liquid-edge); border-radius: 16px; background: linear-gradient(145deg, rgb(235 243 248 / .085), transparent 45%), rgb(16 22 26 / .54); color: var(--text); box-shadow: var(--liquid-shadow); backdrop-filter: none; }
+.view-sector .paper-panel .provenance-tag, .view-sector .paper-panel .provenance-tag b { color: var(--text-secondary); }
+.view-sector .sticky-chart { position: sticky; top: 88px; padding: 19px; max-height: calc(100vh - 102px); overflow-x: hidden; overflow-y: auto; }
+.view-sector .sector-visual-stage { border-color: var(--liquid-edge); }
+.view-sector .story-sections > section { border-color: var(--liquid-edge); background: radial-gradient(ellipse 90% 65% at 100% 0%, rgb(214 228 236 / .035), transparent); }
+.sector-progress { height: 2px; margin: -10px 0 15px; background: rgb(255 255 255 / .14); }
+.sector-progress i { display: block; width: 100%; height: 100%; background: #e6edf1; transform-origin: left; transition: transform .5s cubic-bezier(.2,.75,.2,1); }
+.sector-comparison-track i { background: linear-gradient(90deg, #74838c, #eef3f5); }
+
+@media (max-width: 1100px) {
+  .view-sector .sector-aside .sticky-chart { position: static; top: auto; max-height: none; overflow: visible; }
+}
+
+/* Analytical routes keep values and controls crisp. */
+.editorial-heading { position: relative; isolation: isolate; padding-bottom: 40px; }
+.editorial-heading::before { position: absolute; z-index: -1; width: 55%; height: 100%; top: 0; right: 0; background: radial-gradient(ellipse at center, rgb(208 223 233 / .075), transparent 70%); content: ""; pointer-events: none; }
+.view-compare .comparison-controls { padding: 18px; margin: 8px 0 25px; }
+.view-compare .comparison-chart, .view-compare .rank-bars { padding: 22px; border: 1px solid var(--liquid-edge); border-radius: 14px; background: rgb(13 18 21 / .45); animation: surface-arrive .38s ease both; }
+.view-compare .view-switch button.active { border-color: rgb(255 255 255 / .45); background: rgb(211 226 235 / .14); }
+.rank-bar-row i span, .integrated-score i { transition: width .55s cubic-bezier(.2,.75,.2,1); }
+.view-rankings .category-feature { padding: 22px; margin-bottom: 34px; }
+.view-rankings .recommendation-result { border: 0; box-shadow: none; backdrop-filter: none; background: transparent; margin-bottom: 0; }
+.view-rankings .ranking-columns > div { border-top: 1px solid var(--liquid-edge); padding-top: 18px; }
+.view-rankings .rank-row { transition: background .25s ease, transform .3s ease; }
+.view-rankings .rank-row:hover { transform: translateX(4px); }
+.view-methodology .method-notes { gap: 14px; }
+.view-methodology .method-notes article { padding: clamp(20px, 2.6vw, 30px); }
+.view-methodology .source-inventory > section, .view-methodology .method-reference, .view-methodology .method-limitations { border-top: 1px solid var(--liquid-edge); padding-top: 24px; }
+.view-methodology .source-inventory details { transition: background .3s ease; }
+.view-methodology .source-inventory details[open] { background: rgb(217 230 238 / .045); }
+.view-intelligence .intel-controls, .view-company .intel-controls { padding: 20px; margin: 16px 0; }
+:is(.view-intelligence, .view-company) .intel-source, :is(.view-intelligence, .view-company) .intel-claims article { padding: 18px; margin: 6px 0; border: 1px solid rgb(235 241 246 / .14); border-radius: 10px; background: rgb(19 26 31 / .34); transition: border-color .3s ease, background .3s ease, transform .3s ease; }
+:is(.view-intelligence, .view-company) .intel-source:hover, :is(.view-intelligence, .view-company) .intel-claims article:hover { border-color: var(--liquid-edge); background: rgb(29 37 42 / .46); transform: translateY(-2px); }
+.view-intelligence .intel-report-head, .view-intelligence .intel-conclusion { border-bottom: 1px solid var(--liquid-edge); }
+.intel-report { animation: surface-arrive .52s cubic-bezier(.2,.75,.2,1) both; }
+.intel-case-grid { position: relative; }
+.intel-case-grid::before { position: absolute; top: 32px; bottom: 32px; left: 50%; width: 1px; background: linear-gradient(180deg, transparent, rgb(222 234 241 / .25), transparent); content: ""; pointer-events: none; }
+
+@keyframes surface-arrive { from { opacity: .55; transform: translateY(10px); filter: blur(4px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+@keyframes metric-reveal { from { opacity: .3; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ambient-tide { from { transform: translate3d(-2vw, -2vh, 0) rotate(-5deg) scale(.96); } to { transform: translate3d(2vw, 3vh, 0) rotate(6deg) scale(1.08); } }
+
+@media (max-width: 1024px) {
+  .hero { gap: 24px; }
+  .hero h1 { font-size: clamp(4.2rem, 7.5vw, 6.5rem); }
+  .hero-data { padding: 16px; }
+  .hero-network { left: 34%; width: min(60vw, 740px); }
+}
+@media (max-width: 640px) {
+  .hero { min-height: 0; gap: 28px; padding: 42px 0 64px; }
+  .hero::before { background-position: 50% 73%; }
+  .hero::after { background: linear-gradient(180deg, rgb(5 8 11 / .64), rgb(5 8 11 / .28) 48%, rgb(5 8 11 / .7)); }
+  .hero-copy { padding: 0; }
+  .hero h1 { max-width: none; margin: 20px 0; font-size: clamp(3.5rem, 16vw, 5.25rem); }
+  .hero-copy h1 { margin-bottom: min(80vw, 300px); }
+  .hero-copy > p { font-size: 17px; }
+  .hero-network { top: 236px; left: 50%; width: min(94vw, 450px); transform: translateX(-50%); }
+  .hero-data { margin: 0; padding: 15px; }
+  .hero-explore { margin-top: 18px; }
+  .liquid-surface, .view-company .company-context, .view-company .assessment-row > div,
+  .view-sector .sticky-chart, .view-compare .comparison-controls, .view-rankings .category-feature,
+  .view-methodology .method-notes article, .view-intelligence .intel-controls, .view-company .intel-controls { border-radius: 12px; }
+  .view-company .assessment-row { grid-template-columns: 1fr; }
+  .view-company .assessment-row > div, .view-company .assessment-row > div + div { padding: 16px; }
+  .view-company .technical-chart { padding: 12px; }
+  .view-sector .paper-panel { padding: 24px; }
+  .view-sector .sticky-chart { border: 0; padding: 0; box-shadow: none; background: transparent; backdrop-filter: none; }
+  .view-compare .comparison-controls, .view-rankings .category-feature, .view-intelligence .intel-controls, .view-company .intel-controls { padding: 14px; }
+  :is(.view-intelligence, .view-company) .intel-source, :is(.view-intelligence, .view-company) .intel-claims article { padding: 14px; }
+  .intel-case-grid::before { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-shell::before { animation: none; will-change: auto; }
+  .hero-network { position: absolute; top: 6px; left: 33%; width: min(58vw, 880px); }
+  .recommendation-result, .view-compare .comparison-chart, .view-compare .rank-bars, .view-company .assessment-row strong, .intel-report { animation: none; }
+  .liquid-control, .compare-action, .intel-secondary, .view-switch button, .rank-bar-row i span, .integrated-score i, .sector-progress i { transition: none; }
+}
+@media (max-width: 640px) and (prefers-reduced-motion: reduce) {
+  .hero-network { position: absolute; top: 236px; left: 50%; width: min(94vw, 450px); }
+  .hero-copy h1 { margin-bottom: min(80vw, 300px); }
+}

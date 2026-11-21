@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-22",
+  "environment": "Production Chrome; ANGLE SwiftShader software WebGL; 1440x900 DPR 1",
+  "scenario": "32 Rankings scroll steps, 14px per step, 35ms requested waits; includes browser-driver overhead. All visible large and compact panels are optical.",
+  "elapsed_ms": 1593,
+  "textures": 1,
+  "framebuffers": 0,
+  "shaderCompilations": 2,
+  "draw_calls": 33,
+  "texture_uploads": 5,
+  "texture_pixels_uploaded": 3645000,
+  "gpu_canvas_copies": 5,
+  "max_concurrent_outputs": 7,
+  "glass_measurements": 35,
+  "long_task_count": 1,
+  "long_task_ms": 720,
+  "cdp_task_seconds": 0.8367920000000001,
+  "cdp_script_seconds": 0.726321,
+  "raf_median_ms": 333.6999999999998,
+  "raf_p95_ms": 367.1999999999998,
+  "gpu_copy_cpu_median_ms": 0,
+  "gpu_copy_cpu_p95_ms": 0.09999996423721313,
+  "notes": [
+    "No per-panel framebuffer allocations; one shader program and one environment texture.",
+    "One GPU canvas copy per uploaded frame; per-host tiles copy from the completed 2D snapshot.",
+    "Frame timing uses software rendering and includes driver waits; it is not a physical GPU or mobile FPS claim.",
+    "GPU timer queries were not collected. Historical compact-only profiling is retained separately and is not an equivalent visual workload."
+  ]
+}

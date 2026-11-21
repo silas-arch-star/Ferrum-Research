@@ -1,0 +1,115 @@
+/* Clear optical material. The animated environment supplies the colour;
+   the lens has no black tint, frosting, delayed fade or content rasterisation. */
+@property --glass-rim-angle { syntax: '<angle>'; initial-value: 20deg; inherits: false; }
+:root {
+  --base: #17212c; --surface: #25323e; --raised: #30404e;
+  --border: rgb(207 225 235 / .17); --border-strong: rgb(207 225 235 / .32);
+  --text: #f5f6f5; --text-secondary: #d0d9de; --text-tertiary: #adbdc8;
+  --glass-fill: rgb(232 242 250 / .025); --liquid-ink: transparent; --liquid-clear: transparent;
+  --card-pad: clamp(22px, 2.3vw, 36px); --card-gap: clamp(16px, 2vw, 28px);
+  --control-pad: 14px; --card-radius: 18px;
+}
+body, .app-shell { background: #17212c; }
+.app-shell::before { display: none; }
+.glass-material-backdrop { position: fixed; inset: 0; z-index: 0; width: 100%; height: 100%; pointer-events: none; }
+.glass-render-stage { position: fixed; inset: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none; z-index: -100; }
+.optical-glass-host { isolation: isolate; min-width: 0; }
+.app-shell .optical-glass-host[data-glass-variant], :is(.command-box,.source-drawer).optical-glass-host[data-glass-variant] {
+  background: transparent; border: 1px solid rgb(233 244 250 / .22); border-radius: var(--card-radius);
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  box-shadow: 0 12px 32px rgb(3 10 16 / .12), inset 0 1px rgb(255 255 255 / .08);
+}
+.app-shell .optical-glass-host > .optical-glass, :is(.command-box,.source-drawer).optical-glass-host > .optical-glass {
+  position: absolute; z-index: -1; inset: 0; border-radius: inherit;
+  pointer-events: none; overflow: hidden; opacity: 1;
+}
+.optical-output { position: absolute; pointer-events: none; max-width: none; transition: none; }
+.optical-glass::before, .optical-glass::after { position: absolute; inset: 0; border-radius: inherit; content: ''; pointer-events: none; }
+.optical-glass::before {
+  z-index: 2; padding: 1px;
+  background: conic-gradient(from var(--glass-rim-angle), transparent, rgb(245 250 255 / .44) 12%, transparent 30%, transparent 53%, rgb(239 247 252 / .25) 72%, transparent 88%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: glass-silver-flow var(--glass-duration, 16s) linear var(--glass-delay, 0s) infinite; animation-play-state: paused;
+}
+[data-glass-visible='true'] > .optical-glass::before { animation-play-state: running; }
+.optical-glass::after { box-shadow: inset 0 1px 0 rgb(255 255 255 / .1), inset 0 -1px rgb(224 239 251 / .05); }
+.app-shell .topbar-inner[data-glass-variant] { border-radius: 0 0 16px 16px; border-top: 0; padding-inline: 16px; }
+.app-shell :is(.liquid-control,.compare-action,.intel-secondary,.view-switch button,.comparison-selected button,.palette-trigger,.mobile-menu-button) {
+  background: rgb(233 244 250 / .035); backdrop-filter: none; -webkit-backdrop-filter: none;
+  border-color: rgb(233 244 250 / .25);
+  transition: border-color .25s ease, background-color .25s ease, box-shadow .3s ease, transform .3s ease;
+}
+.app-shell :is(.liquid-control,.compare-action,.intel-secondary,.view-switch button,.comparison-selected button):hover {
+  background-color: rgb(233 244 250 / .07); border-color: rgb(245 251 255 / .6); transform: translateY(-2px);
+}
+.app-shell :is(button,input,select,textarea,a,summary):focus-visible { outline: 2px solid #d6eaf5; outline-offset: 4px; }
+.app-shell :is(input,select,textarea) { color: var(--text); background-color: rgb(233 244 250 / .025); border-color: var(--border-strong); }
+.app-shell select option { background: #25323e; color: var(--text); }
+.app-shell :is(input,select,textarea):focus { border-color: rgb(245 251 255 / .65); box-shadow: 0 0 0 3px rgb(245 251 255 / .06); }
+.app-shell button:disabled { cursor: not-allowed; }
+.app-shell button[aria-selected='true'], .app-shell button[aria-pressed='true'] { box-shadow: inset 0 -1px rgb(245 251 255 / .65); }
+.command-dialog, .source-backdrop { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgb(7 15 22 / .35); }
+.app-shell .module-nav.mobile-open { backdrop-filter: none; -webkit-backdrop-filter: none; }
+.hero-data.optical-glass-host::before { display: none; }
+.hero-data.optical-glass-host { text-shadow: 0 1px 3px rgb(0 0 0 / .4); }
+.hero-data .scatter-grid { stroke: rgb(215 230 240 / .23); }
+
+/* Padding belongs to the card, not its decorative child. Previously ranking
+   columns acquired a rounded border with only padding-top and zero side inset. */
+.app-shell :is(.ranking-columns > div,.source-inventory > section,.method-reference,.method-limitations,.visual-chart-card,.rank-bars,.comparison-chart,.intel-hero,.intel-report-head,.intel-conclusion,.intel-monitor,.source-index,.sector-factor-index,.research-columns > div,.analyst-note)[data-glass-variant] { padding: var(--card-pad); }
+.app-shell :is(.recommendation-result,.company-context,.paper-panel,.method-notes article)[data-glass-variant] { padding: var(--card-pad); }
+.app-shell :is(.assessment-row > div,.visual-kpi,.model-assessment,.risk-detail,.bull-bear > div,.intel-source,.intel-claims article,.intel-empty,.intel-warning)[data-glass-variant] { padding: clamp(18px, 1.7vw, 26px); }
+.app-shell :is(.coverage-strip,.comparison-controls,.intel-hub-controls,.intel-controls,.comparison-selected)[data-glass-variant] { padding: var(--control-pad) var(--card-pad); }
+.app-shell :is(.chart-controls,.heatmap-controls,.data-sheet-toolbar,.category-tabs)[data-glass-variant] { padding: 12px 16px; }
+.app-shell :is(.table-scroll,.data-sheet-scroll,.compare-table-wrap,.score-heatmap-wrap)[data-glass-variant] { border-radius: 12px; }
+.app-shell .score-heatmap-wrap > :is(.heatmap-controls,.heatmap-legend) { margin-inline: var(--control-pad); }
+.app-shell .side-by-side[data-glass-variant] { padding: var(--card-pad); }
+.app-shell :is(.ranking-columns,.integrated-visual-grid,.source-inventory,.method-notes,.visual-kpi-grid) { gap: var(--card-gap); }
+.ranking-columns h2 { font-size: clamp(24px, 2.1vw, 32px); line-height: 1.2; overflow-wrap: anywhere; }
+.app-shell .ranking-columns .rank-row { padding: 10px 0; gap: 8px; }
+.app-shell .ranking-columns .rank-row b { white-space: normal; overflow-wrap: anywhere; }
+.app-shell :is(.recommendation-result,.company-context,.intel-hero) h2 { overflow-wrap: anywhere; }
+.app-shell :is(.visual-chart-heading,.section-heading) { min-width: 0; }
+.app-shell .visual-chart-heading > div { min-width: 0; }
+.app-shell .visual-chart-heading h4 { overflow-wrap: anywhere; line-height: 1.25; }
+.app-shell .sector-visual-stage[data-glass-variant], .app-shell .sector-visual-inline[data-glass-variant] { padding: 18px; border-radius: 14px; }
+.app-shell .context-strip[data-glass-variant] { border-radius: 10px; padding-inline: 16px; }
+.app-shell .sector-chapter-nav[data-glass-variant] { border-radius: 10px; padding: 8px; }
+.app-shell .view-switch[data-glass-variant] { border-radius: 12px; padding: 4px; }
+.app-shell .intel-buttons[data-glass-variant] { padding: 8px; }
+.universe-table .sticky-company, .universe-table thead th, .universe-table thead .sticky-company, .data-sheet-scroll th { background: #263541; }
+.command-search { background: #263541; }
+.app-shell .sector-layout, .view-sector .story-sections > section { background: transparent; }
+.app-shell .liquid-surface > .optical-glass { position: absolute; z-index: -1; }
+
+/* Quantitative colour is independent of the glass palette. */
+.score-heatmap td { font-variant-numeric: tabular-nums; }
+.compare-dot circle { fill: currentColor; }
+.compare-dot:hover circle, .compare-dot:focus circle { fill: currentColor; stroke: #f5f6f5; }
+.chart-series-legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 16px; font-size: 13px; color: var(--text-secondary); }
+.chart-series-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.chart-series-legend i { width: 8px; height: 8px; border-radius: 50%; }
+.rank-bar-row i span, .integrated-score > span > i, .leader-row i span { background: #78c9bd; }
+.rank-bar-row.negative i span { background: var(--negative); }
+.leader-row.current i span { background: #b0ead8; }
+.sector-comparison-track i { background: linear-gradient(90deg, #4a8db5, #9bd2e9); }
+.recharts-cartesian-axis-tick-value { fill: var(--text-tertiary); }
+.recharts-cartesian-grid line { stroke: rgb(207 225 235 / .18); }
+
+@keyframes glass-silver-flow { to { --glass-rim-angle: 380deg; } }
+@media (max-width: 1100px) { :root { --card-pad: 24px; } }
+@media (max-width: 640px) {
+  :root { --card-pad: 18px; --card-gap: 18px; --control-pad: 12px; --card-radius: 14px; }
+  .app-shell .topbar-inner[data-glass-variant] { padding-inline: 8px; gap: 8px; }
+  .app-shell .sector-visual-inline[data-glass-variant] { padding: 14px; }
+  .app-shell .ranking-columns .rank-row { grid-template-columns: 28px minmax(0,1fr) 50px; }
+  .app-shell .visual-chart-heading { align-items: stretch; }
+  .app-shell .visual-select select { max-width: 100%; }
+  .app-shell .module-nav { background: #263541; backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .optical-glass::before { animation: none; }
+  .app-shell :is(button,input,select,textarea,a,summary) { transition: none; }
+  .app-shell :is(.liquid-control,.compare-action,.intel-secondary,.view-switch button,.comparison-selected button):hover { transform: none; }
+}

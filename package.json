@@ -1,0 +1,9 @@
+{
+  "name": "ferrum",
+  "private": true,
+  "scripts": {
+    "start": "node scripts/start-ferrum.mjs",
+    "dev": "node scripts/start-ferrum.mjs --dev",
+    "build": "node frontend/node_modules/next/dist/bin/next build frontend"
+  }
+}

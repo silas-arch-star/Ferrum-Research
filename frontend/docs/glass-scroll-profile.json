@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-22",
+  "environment": "Headless production Chromium; ANGLE SwiftShader software WebGL; 1440x900, DPR 1",
+  "scenario": "Same 32-step Rankings scroll, 14px per step, 35ms requested waits; browser driver/sample overhead included. Not a hardware FPS benchmark.",
+  "before": {
+    "elapsed_ms": 30202.7,
+    "draw_calls": 918,
+    "glass_measurements": 3108,
+    "long_task_count": 18,
+    "long_task_ms": 4567,
+    "live_glass_renderers": 1,
+    "cdp_task_seconds": 10.367691,
+    "cdp_script_seconds": 0.837452,
+    "raf_median_ms": 200.3,
+    "raf_p95_ms": 367.2,
+    "bright_interior_pixels_max": 26,
+    "texture_uploads_and_allocations": 318,
+    "texture_pixels_uploaded_or_allocated": 107911326
+  },
+  "after": {
+    "elapsed_ms": 14345.6,
+    "draw_calls": 294,
+    "glass_measurements": 72,
+    "long_task_count": 0,
+    "long_task_ms": 0,
+    "live_glass_renderers": 1,
+    "cdp_task_seconds": 0.356832,
+    "cdp_script_seconds": 0.067866,
+    "raf_median_ms": 133.4,
+    "raf_p95_ms": 233.3,
+    "bright_interior_pixels_max": 0,
+    "texture_uploads_and_allocations": 98,
+    "texture_pixels_uploaded_or_allocated": 15055152
+  },
+  "notes": [
+    "Before: 26 of 260 sampled interior pixels in the recommendation canvas were white while the panel extended beyond the backdrop.",
+    "After: large recommendation panels deliberately have no raster optical layer; their transparent material cannot retain that incomplete bitmap.",
+    "Package GLSL and shared WebGL renderer retained for compact surfaces. Uploaded-pixel reduction is work per identical scripted sequence, not per-second throughput.",
+    "GPU timing queries were not collected; CDP main-thread task time and WebGL call counters were measured.",
+    "texImage2D counters include both canvas texture uploads and framebuffer texture allocations. Glass measurement counters include identical QA sampling rect reads."
+  ]
+}

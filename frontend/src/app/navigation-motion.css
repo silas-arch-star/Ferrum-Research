@@ -1,0 +1,48 @@
+/* Small content transitions and live route feedback. */
+::view-transition { pointer-events: none; }
+::view-transition-group(root), ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+
+@media (min-width: 1101px) and (prefers-reduced-motion: no-preference) {
+  ::view-transition-group(.ferrum-content), ::view-transition-group(.ferrum-selection) {
+    animation-duration: .34s; animation-timing-function: cubic-bezier(.22, 1, .36, 1); overflow: clip; border-radius: 8px;
+  }
+  ::view-transition-old(.ferrum-content), ::view-transition-old(.ferrum-selection) {
+    animation: ferrum-content-depart .22s cubic-bezier(.4, 0, 1, 1) both;
+  }
+  ::view-transition-new(.ferrum-content), ::view-transition-new(.ferrum-selection) {
+    animation: ferrum-content-arrive .38s cubic-bezier(.16, 1, .3, 1) both;
+  }
+  .app-shell .module-link, .app-shell .category-tab, .app-shell .view-switch button { position: relative; }
+  .module-link:has(.motion-tab-ink)::after { display: none; }
+  .app-shell .category-tab:has(.motion-tab-ink) { border-bottom-color: transparent; }
+  .motion-tab-ink { position: absolute; z-index: 2; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--accent); box-shadow: 0 -3px 14px rgb(165 210 198 / .18); pointer-events: none; }
+  .app-shell .view-switch .motion-tab-ink { bottom: 0; left: 12px; right: 12px; height: 1px; }
+  .comparison-stage { min-width: 0; }
+  .comparison-stage > :first-child { animation: ferrum-content-arrive .34s cubic-bezier(.22,1,.36,1) both; }
+  .artifact-replay { display: inline-flex; align-items: center; gap: 9px; margin: 22px 0 0 18px; padding: 6px 0; background: transparent; border: 0; color: var(--text-tertiary); font: 11px/1.6 var(--ui); cursor: pointer; }
+  .artifact-replay::before { width: 12px; height: 12px; border: 1px solid currentColor; transform: rotate(45deg); content: ""; transition: transform .65s cubic-bezier(.22, 1, .36, 1), background-color .3s ease; }
+  .artifact-replay:hover { color: var(--accent); }
+  .artifact-replay:hover::before { transform: rotate(225deg); background: rgb(165 210 198 / .13); }
+}
+
+.motion-navigation-seam { position: fixed; z-index: 950; inset: 0 0 auto; height: 2px; pointer-events: none; opacity: 0; transition: opacity .4s ease; }
+.motion-navigation-seam > i { display: block; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, #a5d2c6 45%, #f2f4e9 70%, transparent); transform-origin: left; transform: scaleX(0); }
+.motion-navigation-seam > span { position: absolute; top: 91px; right: 4vw; padding: 7px 11px; border: 1px solid rgb(165 210 198 / .2); border-radius: 3px; background: #111719; color: #a5d2c6; font: 10px/1.5 var(--mono); letter-spacing: .04em; opacity: 0; transform: translateY(-6px); transition: opacity .3s ease, transform .5s cubic-bezier(.22, 1, .36, 1); }
+.motion-navigation-seam[data-phase='travelling'] { opacity: 1; }
+.motion-navigation-seam[data-phase='travelling'] > i { animation: ferrum-seam-travel 4s cubic-bezier(.16, 1, .3, 1) both; }
+.motion-navigation-seam[data-phase='travelling'] > span { opacity: 1; transform: none; transition-delay: .3s; }
+.motion-navigation-seam[data-phase='complete'] { opacity: 1; }
+.motion-navigation-seam[data-phase='complete'] > i { transform: scaleX(1); transition: transform .4s cubic-bezier(.16, 1, .3, 1); }
+.motion-navigation-seam > em { position: absolute; top: 79px; left: 0; right: 0; height: 2px; opacity: 0; background: linear-gradient(90deg,transparent,#54776d 30%,#c7e9df 72%,transparent); transform-origin: left; }
+.motion-navigation-seam[data-phase='complete'] > em { animation: ferrum-masthead-glint .7s cubic-bezier(.22,1,.36,1) both; }
+@keyframes ferrum-masthead-glint { 0% { transform: scaleX(.05); opacity: 0; } 35% { opacity: .85; } 100% { transform: scaleX(1); opacity: 0; } }
+
+@keyframes ferrum-content-depart { to { opacity: 0; transform: translateY(-6px) scale(.99);  } }
+@keyframes ferrum-content-arrive { from { opacity: 0; transform: translateY(8px);  } to { opacity: 1; transform: none;  } }
+@keyframes ferrum-seam-travel { from { transform: scaleX(0); } 30% { transform: scaleX(.62); } to { transform: scaleX(.92); } }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation-duration: 0s !important; animation-delay: 0s !important; }
+  .motion-navigation-seam { display: none; }
+}
+@media (max-width: 1100px) { .motion-navigation-seam, .motion-tab-ink { display: none; } }

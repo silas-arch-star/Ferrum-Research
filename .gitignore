@@ -1,0 +1,41 @@
+﻿# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules/
+.next/
+out/
+dist/
+
+# Local data
+data/
+.ferrum/
+*.log
+
+# Local backups and development output
+/frontend_backup_*/
+/artifacts/
+/test-results/
+/playwright-report/
+/frontend/test-results/
+/frontend/playwright-report/
+/.sector-*-check.png
+/frontend/.glass-*
+/frontend/ferrum-after-*.png
+/frontend/ferrum-before-*.png
+/frontend/ferrum-analysis-*.png
+/frontend/ferrum-final-*.png
+
+# Editors and OS
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,104 @@
+@supports (appearance: base-select) and selector(select::picker(select)) {
+  .app-shell select,
+  .app-shell select::picker(select) {
+    appearance: base-select;
+  }
+
+  .app-shell select {
+    align-items: center;
+    gap: 12px;
+    padding-inline-end: 12px;
+    background-image: none;
+    cursor: pointer;
+  }
+
+  .app-shell select::picker-icon {
+    content: "";
+    flex: 0 0 auto;
+    inline-size: 7px;
+    block-size: 7px;
+    margin-inline-start: auto;
+    border: solid currentColor;
+    border-width: 0 1.5px 1.5px 0;
+    color: var(--accent, var(--text-secondary));
+    translate: 0 -2px;
+    rotate: 45deg;
+    transition: rotate 240ms cubic-bezier(.22, 1, .36, 1), translate 240ms cubic-bezier(.22, 1, .36, 1);
+  }
+
+  .app-shell select:open::picker-icon {
+    translate: 0 2px;
+    rotate: 225deg;
+  }
+
+  .app-shell select::picker(select) {
+    margin-block: 6px;
+    padding: 5px;
+    max-inline-size: calc(100vw - 24px);
+    max-block-size: min(22rem, 48dvh);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #688984 transparent;
+    position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
+    border: 1px solid #62847e;
+    border-radius: 10px;
+    background: rgb(19 30 33 / .88);
+    backdrop-filter: blur(14px);
+    color: #e9f1ef;
+    box-shadow: 0 14px 32px rgb(4 12 14 / .38);
+    opacity: 0;
+    transform: translateY(-5px) scale(.985);
+    transition:
+      opacity 170ms ease-out,
+      transform 250ms cubic-bezier(.22, 1, .36, 1),
+      display 250ms allow-discrete,
+      overlay 250ms allow-discrete;
+  }
+
+  .app-shell select:open::picker(select) {
+    opacity: 1;
+    transform: none;
+  }
+
+  @starting-style {
+    .app-shell select:open::picker(select) {
+      opacity: 0;
+      transform: translateY(-7px) scale(.975);
+    }
+  }
+
+  .app-shell select option {
+    justify-content: space-between;
+    gap: 12px;
+    min-block-size: 36px;
+    padding: 7px 10px;
+    border-radius: 5px;
+    background: transparent;
+    color: inherit;
+    line-height: 1.35;
+  }
+
+  .app-shell select option:checked {
+    background: rgb(165 210 198 / .14);
+    color: #c2f1df;
+  }
+
+  .app-shell select option:is(:hover, :focus-visible) {
+    background: rgb(165 210 198 / .24);
+    outline: 1px solid rgb(165 210 198 / .42);
+    outline-offset: -1px;
+  }
+
+  .app-shell select option::checkmark {
+    order: 1;
+    color: #a5d2c6;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .app-shell select::picker-icon,
+    .app-shell select::picker(select) {
+      transition: none;
+    }
+  }
+}
